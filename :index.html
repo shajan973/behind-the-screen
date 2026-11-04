@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEHIND THE SCREEN</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
+:root {
+  --purple: #a855f7;
+  --bg: #08070d;
+  --card: #15121f;
+  --text: #f5f0ff;
+  --muted: #aaa0b8;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 7%;
+  border-bottom: 1px solid #292133;
+  position: sticky;
+  top: 0;
+  background: #08070dee;
+  z-index: 10;
+}
+.logo { font-weight: 900; letter-spacing: 2px; color: #c084fc; }
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 13px;
+}
+nav a:hover { color: white; }
+.hero {
+  min-height: 490px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 20px;
+  background: radial-gradient(ellipse at center, #35134d 0%, #130d1e 40%, #08070d 75%);
+}
+.tag {
+  color: #d8b4fe;
+  border: 1px solid #7136a0;
+  padding: 6px 17px;
+  border-radius: 30px;
+  font-size: 12px;
+}
+h1 {
+  font-size: clamp(38px, 8vw, 75px);
+  margin: 20px 0 5px;
+  line-height: 1.2;
+  letter-spacing: 2px;
+}
+.hero p { color: #c7b9d5; max-width: 550px; }
+.btn {
+  background: var(--purple);
+  color: white;
+  border: 0;
+  padding: 12px 25px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 15px;
+}
+.btn:hover { background: #9333ea; }
+section { padding: 65px 8%; }
+.section-title { text-align: center; margin-bottom: 35px; }
+.section-title h2 { font-size: 30px; margin-bottom: 5px; }
+.section-title p { color: var(--muted); font-size: 14px; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+  gap: 17px;
+}
+.card {
+  background: linear-gradient(145deg,#1d1729,#100e17);
+  border: 1px solid #30243d;
+  border-radius: 15px;
+  padding: 23px;
+}
+.card .symbol { font-size: 27px; color: #c084fc; }
+.card h3 { margin: 8px 0; }
+.card p { color: var(--muted); font-size: 13px; line-height: 1.9; }
+.panel {
+  max-width: 750px;
+  margin: auto;
+  background: var(--card);
+  border: 1px solid #382747;
+  padding: 28px;
+  border-radius: 17px;
+}
+textarea, input {
+  width: 100%;
+  background: #0c0a12;
+  border: 1px solid #42334f;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: inherit;
+  outline: none;
+  margin: 10px 0;
+}
+textarea:focus, input:focus { border-color: var(--purple); }
+textarea { min-height: 110px; resize: vertical; }
+.result {
+  display: none;
+  background: #21152d;
+  border-right: 3px solid var(--purple);
+  padding: 17px;
+  border-radius: 8px;
+  margin-top: 18px;
+  line-height: 2;
+  white-space: pre-wrap;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: right;
+  margin: 10px 0;
+  padding: 13px;
+  background: #0d0a14;
+  color: white;
+  border: 1px solid #453450;
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.quiz-option:hover { border-color: var(--purple); background: #21152d; }
+#chatMessages {
+  height: 260px;
+  overflow-y: auto;
+  padding: 12px;
+  background: #0c0a12;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+.message { margin: 10px 0; padding: 11px 14px; border-radius: 10px; line-height: 1.8; }
+.bot { background: #261832; margin-left: 12%; }
+.user { background: #382052; margin-right: 12%; }
+footer {
+  text-align: center;
+  padding: 25px;
+  border-top: 1px solid #292133;
+  color: #81758d;
+  font-size: 12px;
+}
+@media(max-width:600px) {
+  header { flex-direction: column; gap: 10px; }
+  nav a { margin: 0 5px; font-size: 11px; }
+  section { padding: 45px 5%; }
+  .panel { padding: 18px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">BEHIND THE SCREEN</div>
+  <nav>
+    <a href="#about">عن التنمر</a>
+    <a href="#analyze">حلّل تعليق</a>
+    <a href="#quiz">اختبر نفسك</a>
+    <a href="#chat">اسأل AI</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <span class="tag">حملة التوعية بالتنمر الإلكتروني</span>
+  <h1>BEHIND THE<br><span style="color:#c084fc">SCREEN</span></h1>
+  <p>وراء كل شاشة شخص حقيقي، وكلمة واحدة ممكن تترك أثر ما يختفي.</p>
+  <a class="btn" href="#about">اكتشف أكثر</a>
+</div>
+
+<section id="about">
+  <div class="section-title">
+    <h2>شنو هو التنمر الإلكتروني؟</h2>
+    <p>خلنا نفهم شنو يصير خلف الشاشات</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="symbol">💬</div>
+      <h3>التعليقات الجارحة</h3>
+      <p>كتابة تعليقات مهينة أو سلبية بهدف إيذاء شخص أو التقليل منه.</p>
+    </div>
+    <div class="card">
+      <div class="symbol">📸</div>
+      <h3>نشر الصور</h3>
+      <p>نشر صور أو معلومات شخصية لشخص دون موافقته بقصد إحراجه.</p>
+    </div>
+    <div class="card">
+      <div class="symbol">🚫</div>
+      <h3>الإقصاء الإلكتروني</h3>
+      <p>استبعاد شخص عمداً من المجموعات أو المحادثات لإشعاره بالرفض.</p>
+    </div>
+    <div class="card">
+      <div class="symbol">👤</div>
+      <h3>انتحال الشخصية</h3>
+      <p>استخدام حساب شخص آخر أو هويته لنشر كلام أو تصرفات مسيئة.</p>
+    </div>
+  </div>
+</section>
+
+<section id="analyze">
+  <div class="section-title">
+    <h2>حلّل التعليق</h2>
+    <p>اكتب تعليقاً وشوف شنو ممكن يكون نوعه وتأثيره</p>
+  </div>
+  <div class="panel">
+    <label>اكتب التعليق هنا:</label>
+    <textarea id="comment" placeholder="اكتب التعليق..."></textarea>
+    <button class="btn" onclick="analyzeComment()">حلّل التعليق بالذكاء الاصطناعي</button>
+    <div id="analysisResult" class="result"></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="section-title">
+    <h2>اختبر تصرفك</h2>
+    <p>هل تعرف تتعامل مع التنمر الإلكتروني؟</p>
+  </div>
+  <div class="panel">
+    <h3 id="question">شفت شخص يتعرض لتعليقات جارحة، شنو أفضل تصرف؟</h3>
+    <div id="options">
+      <button class="quiz-option" onclick="answer(0)">أشارك بالتعليقات</button>
+      <button class="quiz-option" onclick="answer(1)">أتجاهل الموضوع تماماً</button>
+      <button class="quiz-option" onclick="answer(2)">أدعم الشخص وأبلّغ عن الإساءة</button>
+    </div>
+    <div id="quizResult" class="result"></div>
+    <button class="btn" id="nextQuestion" style="display:none" onclick="nextQuestion()">السؤال التالي</button>
+  </div>
+</section>
+
+<section id="chat">
+  <div class="section-title">
+    <h2>تحدث مع AI</h2>
+    <p>اسأل عن التنمر الإلكتروني واحصل على إجابات ومساعدة</p>
+  </div>
+  <div class="panel">
+    <div id="chatMessages">
+      <div class="message bot">هلا! أنا مساعدك الذكي. اسألني أي سؤال عن التنمر الإلكتروني.</div>
+    </div>
+    <input id="chatInput" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter') sendMessage()">
+    <button class="btn" onclick="sendMessage()">إرسال</button>
+  </div>
+</section>
+
+<footer>
+  BEHIND THE SCREEN — كلمة ممكن تجرح، وكلمة ممكن تنقذ.
+</footer>
+
+<script>
+async function askAI(message, mode) {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({message, mode})
+  });
+  if (!response.ok) throw new Error('تعذر الاتصال بالذكاء الاصطناعي');
+  const data = await response.json();
+  return data.reply;
+}
+
+async function analyzeComment() {
+  const comment = document.getElementById('comment').value.trim();
+  const result = document.getElementById('analysisResult');
+  if (!comment) {
+    alert('اكتب تعليق أول!');
+    return;
+  }
+  result.style.display = 'block';
+  result.textContent = 'جاري تحليل التعليق...';
+  try {
+    result.textContent = await askAI(
+      'حلل هذا التعليق من ناحية التنمر الإلكتروني. حدد نوعه، سبب تصنيفه، تأثيره المحتمل، واقترح طريقة مناسبة للتعامل معه: ' + comment,
+      'analyze'
+    );
+  } catch(e) {
+    result.textContent = 'الذكاء الاصطناعي غير متصل حالياً. بنفعّله بعد إعداد السيرفر وربط مفتاح API.';
+  }
+}
+
+const questions = [
+  {
+    q:'شفت شخص يتعرض لتعليقات جارحة، شنو أفضل تصرف؟',
+    a:['أشارك بالتعليقات','أتجاهل الموضوع تماماً','أدعم الشخص وأبلّغ عن الإساءة'],
+    correct:2,
+    explanation:'صح! دعم الشخص والإبلاغ عن الإساءة يساعدان في إيقاف التنمر.'
+  },
+  {
+    q:'شخص نشر صورتك بدون إذنك بقصد إحراجك، شنو تسوي؟',
+    a:['أنشر صورته بعد','أحتفظ بالدليل وأبلّغ عن المنشور','أرسل له تهديدات'],
+    correct:1,
+    explanation:'صح! احتفظ بالدليل وبلّغ عن المحتوى، واطلب المساعدة من شخص تثق فيه.'
+  },
+  {
+    q:'شنو يعتبر تنمر إلكتروني؟',
+    a:['إرسال رسالة لطيفة','تقديم نصيحة باحترام','تكرار الإهانات عبر الإنترنت'],
+    correct:2,
+    explanation:'صح! تكرار الإهانات والإيذاء عبر الإنترنت من صور التنمر الإلكتروني.'
+  }
+];
+let questionIndex = 0;
+let score = 0;
+let answered = false;
+
+function showQuestion() {
+  const q = questions[questionIndex];
+  document.getElementById('question').textContent = q.q;
+  document.getElementById('options').innerHTML = q.a.map((a,i) =>
+    `<button class="quiz-option" onclick="answer(${i})">${a}</button>`
+  ).join('');
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('nextQuestion').style.display = 'none';
+  answered = false;
+}
+
+function answer(index) {
+  if (answered) return;
+  answered = true;
+  const q = questions[questionIndex];
+  const result = document.getElementById('quizResult');
+  result.style.display = 'block';
+  if (index === q.correct) {
+    score++;
+    result.textContent = 'إجابة صحيحة! ' + q.explanation;
+  } else {
+    result.textContent = 'مو صحيح، خلنا نتعلم! ' + q.explanation;
+  }
+  document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+  document.getElementById('nextQuestion').style.display = 'inline-block';
+  document.getElementById('nextQuestion').textContent =
+    questionIndex === questions.length - 1 ? 'عرض النتيجة' : 'السؤال التالي';
+}
+
+function nextQuestion() {
+  questionIndex++;
+  if (questionIndex >= questions.length) {
+    document.getElementById('question').textContent = 'خلصت الاختبار!';
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('quizResult').textContent =
+      'نتيجتك: ' + score + ' من ' + questions.length;
+    document.getElementById('quizResult').style.display = 'block';
+    document.getElementById('nextQuestion').style.display = 'none';
+    questionIndex = 0;
+    score = 0;
+    return;
+  }
+  showQuestion();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const messages = document.getElementById('chatMessages');
+  const message = input.value.trim();
+  if (!message) return;
+  messages.innerHTML += `<div class="message user"></div>`;
+  messages.lastElementChild.textContent = message;
+  input.value = '';
+  const loading = document.createElement('div');
+  loading.className = 'message bot';
+  loading.textContent = 'جاري التفكير...';
+  messages.appendChild(loading);
+  messages.scrollTop = messages.scrollHeight;
+  try {
+    const reply = await askAI(message, 'chat');
+    loading.textContent = reply;
+  } catch(e) {
+    loading.textContent = 'الـAI مو متصل للحين. بنربطه بالخطوات القادمة.';
+  }
+  messages.scrollTop = messages.scrollHeight;
+}
+</script>
+</body>
+</html>
