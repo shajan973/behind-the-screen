@@ -1,0 +1,14 @@
+{
+  "name": "behind-the-screen",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "openai": "^5.0.0"
+  },
+  "devDependencies": {
+    "vercel": "^41.0.0"
+  }
+}
